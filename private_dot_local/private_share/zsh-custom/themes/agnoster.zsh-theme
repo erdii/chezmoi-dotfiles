@@ -153,6 +153,21 @@ prompt_dir() {
   prompt_segment blue $CURRENT_FG '%2~'
 }
 
+prompt_ocm() {
+  local ocm_prompt=""
+  if [[ -n "$OCM_CONFIG" && -f "$OCM_CONFIG" ]]; then
+    ocm_prompt+="OCM=$(basename "$OCM_CONFIG")"
+  fi
+  if [[ -n "$BACKPLANE_CONFIG" && -f "$BACKPLANE_CONFIG" ]]; then
+    if [[ -n "$ocm_prompt" ]]; then ocm_prompt+=" "; fi
+    ocm_prompt+="BP=$(basename "$BACKPLANE_CONFIG")"
+  fi
+
+  if [[ -n "$ocm_prompt" ]]; then
+    prompt_segment red white "$ocm_prompt"
+  fi
+}
+
 # Virtualenv: current working virtualenv
 prompt_virtualenv() {
   local virtualenv_path="$VIRTUAL_ENV"
@@ -180,11 +195,12 @@ build_prompt() {
   RETVAL=$?
   prompt_context
   prompt_status
-  prompt_k8s
-  prompt_virtualenv
   prompt_dir
-  prompt_git
+  prompt_virtualenv
   prompt_aws
+  prompt_ocm
+  prompt_k8s
+  prompt_git
   prompt_end
 }
 
