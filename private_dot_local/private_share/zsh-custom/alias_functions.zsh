@@ -90,14 +90,3 @@ function get-ssl-cert {
 function download-mp3 {
     youtube-dl -x --audio-format mp3 "$1"
 }
-
-###
-## NODE/NPM
-###
-
-# usage: npm-publish <newversion>|major|minor|patch|premajor|preminor|prepatch|prerelease
-function npm-publish(){
-  npm version $1 && \
-    git push --follow-tags && \
-    npm publish
-}
