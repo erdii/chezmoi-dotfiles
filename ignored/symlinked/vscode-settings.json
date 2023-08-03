@@ -40,7 +40,6 @@
   "workbench.editor.untitled.hint": "hidden",
   "workbench.startupEditor": "none",
   "redhat.telemetry.enabled": false,
-  "window.zoomLevel": 1,
   "editor.wordWrap": "wordWrapColumn",
   "go.lintTool": "golangci-lint",
   "go.coverageOptions": "showUncoveredCodeOnly",
@@ -50,5 +49,10 @@
   },
   "[jsonnet]": {
     "editor.defaultFormatter": "Grafana.vscode-jsonnet"
-  }
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "window.zoomLevel": 1,
+  "githubPullRequests.pullBranch": "never"
 }
