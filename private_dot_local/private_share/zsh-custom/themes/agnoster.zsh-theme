@@ -154,17 +154,27 @@ prompt_dir() {
 }
 
 prompt_ocm() {
-  local ocm_prompt=""
-  if [[ -n "$OCM_CONFIG" && -f "$OCM_CONFIG" ]]; then
-    ocm_prompt+="OCM=$(basename "$OCM_CONFIG")"
-  fi
-  if [[ -n "$BACKPLANE_CONFIG" && -f "$BACKPLANE_CONFIG" ]]; then
-    if [[ -n "$ocm_prompt" ]]; then ocm_prompt+=" "; fi
-    ocm_prompt+="BP=$(basename "$BACKPLANE_CONFIG")"
+  local ocm_basename="$(basename "$OCM_CONFIG")"
+  local bp_basename="$(basename "$BACKPLANE_CONFIG")"
+
+  local same_basename=0
+  if [[ "$ocm_basename" == "$bp_basename" ]]; then
+    same_basename=1
   fi
 
-  if [[ -n "$ocm_prompt" ]]; then
-    prompt_segment red white "$ocm_prompt"
+  local ocm_ok=0
+  local bp_ok=0
+  if [[ -n "$OCM_CONFIG" && -f "$OCM_CONFIG" ]]; then
+    ocm_ok=1
+  fi
+  if [[ -n "$BACKPLANE_CONFIG" && -f "$BACKPLANE_CONFIG" ]]; then
+    bp_ok=1
+  fi
+
+  if [[ $ocm_ok+$bp_ok -ne 2 || $same_basename -ne 1 ]]; then
+    prompt_segment red white "BROKEN CONFIG: OCM($ocm_basename/$ocm_ok)/BP($bp_basename/$bp_ok)"
+  else
+    prompt_segment red $CURRENT_FG "OCM/BP($ocm_basename)"
   fi
 }
 
