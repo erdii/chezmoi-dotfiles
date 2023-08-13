@@ -29,7 +29,7 @@ plugins=(common-aliases systemd fzf direnv kubectl docker podman archlinux)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export EDITOR=nvim
+export EDITOR=vim
 export DEFAULT_USER=erdii
 
 # Compilation flags
