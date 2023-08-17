@@ -10,3 +10,7 @@ function ocm-select-config() {
 			export BACKPLANE_CONFIG="$HOME/.config/backplane/$(basename "$line")"
 		done
 }
+
+if [[ -f $(command -v jira) ]]; then
+  export JIRA_AUTH_TYPE=bearer
+fi
