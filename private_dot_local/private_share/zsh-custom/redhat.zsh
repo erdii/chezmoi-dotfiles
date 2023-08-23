@@ -14,3 +14,26 @@ function ocm-select-config() {
 if [[ -f $(command -v jira) ]]; then
   export JIRA_AUTH_TYPE=bearer
 fi
+
+function ocm-list-org-subscriptions-active() {
+  if [[ "$1" == "" ]]; then
+    echo "usage: $0 <orgid>"
+    return 1
+  fi
+
+  echo "listing orgs for $1" > /dev/stderr
+
+  ocm get /api/accounts_mgmt/v1/subscriptions\?search="organization_id like '$1'" \
+    | yq -Po yaml \
+      '.items | filter(.status != "Deprovisioned") | map(pick(["display_name", "id", "cluster_id", "status"]))'
+
+}
+
+# extracts organization id from current login, then queries active subscriptions for this org
+function ocm-list-my-org-subscriptions() {
+  ocm-list-org-subscriptions-active "$(ocm whoami | yq -r '.organization.id')"
+}
+
+function ocm-list-hypershift-management-clusters() {
+  ocm list cluster --managed --parameter search="name like 'hs-mc-%'"
+}

@@ -172,9 +172,9 @@ prompt_ocm() {
   fi
 
   if [[ $ocm_ok+$bp_ok -ne 2 || $same_basename -ne 1 ]]; then
-    prompt_segment red white "OCM(x)"
+    prompt_segment red $CURRENT_FG "OCM(x)"
   else
-    prompt_segment red $CURRENT_FG "OCM($ocm_basename)"
+    prompt_segment red white "OCM($ocm_basename)"
   fi
 }
 
