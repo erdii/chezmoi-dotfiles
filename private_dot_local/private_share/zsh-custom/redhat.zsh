@@ -34,6 +34,32 @@ function ocm-list-my-org-subscriptions() {
   ocm-list-org-subscriptions-active "$(ocm whoami | yq -r '.organization.id')"
 }
 
+function ocm-get-cluster-status() {
+  ocm get cluster "$1" | yq -Po yaml .status
+}
+
+function ocm-wait-cluster-ready() {
+  while true; do
+    local state="$(ocm-get-cluster-status "$1" | yq -r '.state')"
+    if [[ "$state" == "ready" ]]; then
+      echo "cluster is ready"
+      return 0
+    fi
+    echo "not ready"
+    sleep 1
+  done
+}
+
 function ocm-list-hypershift-management-clusters() {
   ocm list cluster --managed --parameter search="name like 'hs-mc-%'"
+}
+
+function ocm-extend-cluster-lifetime-by-days() {
+  printf '{\n\t"expiration_timestamp": "%s"\n}\n' \
+    "$(date --iso-8601=seconds -d "+$2 days")" \
+    | ocm patch "/api/clusters_mgmt/v1/clusters/$1"
+}
+
+function ocm-extend-cluster-lifetime-week() {
+  ocm-extend-cluster-lifetime-by-days "$1" "7"
 }
