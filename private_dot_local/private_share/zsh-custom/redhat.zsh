@@ -39,13 +39,16 @@ function ocm-get-cluster-status() {
 }
 
 function ocm-wait-cluster-ready() {
+  echo "waiting for cluster $1 to be ready:"
+  echo "\n"
+
   while true; do
     local state="$(ocm-get-cluster-status "$1" | yq -r '.state')"
     if [[ "$state" == "ready" ]]; then
-      echo "cluster is ready"
+      echo -e "$(date) cluster is ready"
       return 0
     fi
-    echo "not ready"
+    echo "$(tput cuu1)$(date) cluster is not ready$(tput el)"
     sleep 1
   done
 }
