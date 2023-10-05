@@ -154,8 +154,13 @@ prompt_dir() {
 }
 
 prompt_ocm() {
+  if [[ -z "$OCM_CONFIG" && -z "$BACKPLANE_CONFIG" ]]; then
+    return
+  fi
+
   local ocm_basename="$(basename "$OCM_CONFIG")"
   local bp_basename="$(basename "$BACKPLANE_CONFIG")"
+
 
   local same_basename=0
   if [[ "$ocm_basename" == "$bp_basename" ]]; then
@@ -174,7 +179,7 @@ prompt_ocm() {
   if [[ $ocm_ok+$bp_ok -ne 2 || $same_basename -ne 1 ]]; then
     prompt_segment red $CURRENT_FG "OCM(x)"
   else
-    prompt_segment red white "OCM($ocm_basename)"
+    prompt_segment red white "OCM(${${ocm_basename#config.}%.json})"
   fi
 }
 
