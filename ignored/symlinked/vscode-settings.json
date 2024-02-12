@@ -39,19 +39,24 @@
   "workbench.editor.untitled.hint": "hidden",
   "workbench.startupEditor": "none",
   "redhat.telemetry.enabled": false,
-  "editor.wordWrap": "wordWrapColumn",
   "go.lintTool": "golangci-lint",
   "go.coverageOptions": "showUncoveredCodeOnly",
-  "go.coverageDecorator": {
+    "go.coverageDecorator": {
     "coveredGutterStyle": "blockgreen",
     "uncoveredGutterStyle": "blockred"
   },
+  "go.coverOnSingleTest": true,
   "[jsonnet]": {
     "editor.defaultFormatter": "Grafana.vscode-jsonnet"
   },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "window.zoomLevel": 1,
-  "githubPullRequests.pullBranch": "never"
+  "githubPullRequests.pullBranch": "never",
+  "window.zoomLevel": 2,
+  "git.autofetch": true,
+  "vs-kubernetes": {
+    "vs-kubernetes.crd-code-completion": "disabled",
+    "vs-kubernetes.ignore-recommendations": true
+  }
 }
