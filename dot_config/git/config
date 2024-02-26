@@ -26,6 +26,15 @@
 [init]
 	defaultBranch = main
 
+[rerere]
+	enabled = true
+
+[column]
+	ui = auto
+
+[branch]
+sort = -committerdate
+
 [diff]
 	tool = meld
 [difftool]
