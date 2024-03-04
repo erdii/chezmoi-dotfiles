@@ -14,9 +14,6 @@
 [commit]
 	gpgsign = true
 
-[push]
-	followTags = true
-
 [pull]
 	rebase = true
 
